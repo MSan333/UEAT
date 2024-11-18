@@ -71,14 +71,17 @@ public class ShopController {
     @GetMapping("/of/type")
     public Result queryShopByType(
             @RequestParam("typeId") Integer typeId,
-            @RequestParam(value = "current", defaultValue = "1") Integer current
+            @RequestParam(value = "current", defaultValue = "1") Integer current,
+            // 前端不一定传递经纬度 所以加上 required = false属性
+            @RequestParam(value = "x",required = false) Double x,
+            @RequestParam(value = "y",required = false) Double y
     ) {
-        // 根据类型分页查询
-        Page<Shop> page = shopService.query()
-                .eq("type_id", typeId)
-                .page(new Page<>(current, SystemConstants.DEFAULT_PAGE_SIZE));
-        // 返回数据
-        return Result.ok(page.getRecords());
+//        // 根据类型分页查询
+//        Page<Shop> page = shopService.query()
+//                .eq("type_id", typeId)
+//                .page(new Page<>(current, SystemConstants.DEFAULT_PAGE_SIZE));
+//        // 返回数据
+        return shopService.queryShopByType(typeId, current, x, y);
     }
 
     /**
