@@ -24,6 +24,7 @@ public class NettyClient {
     private static final AtomicInteger successCount = new AtomicInteger(0);
     private static final AtomicInteger failedCount = new AtomicInteger(0);
 
+
     public static void main(String[] args) throws InterruptedException {
         int clientCount = 200; // 模拟 200 个并发客户端
         CountDownLatch latch = new CountDownLatch(clientCount);
