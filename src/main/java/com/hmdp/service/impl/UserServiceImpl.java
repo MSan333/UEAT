@@ -61,7 +61,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         // 5. 发送验证码
         log.debug("发信短信验证码成功，验证码:{}", code);
         // 6. 返回OK
-        return Result.ok();
+        return Result.ok(code);
     }
 
     @Override
@@ -104,6 +104,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         // 7.3 存储用户
         String tokenKey = RedisConstants.LOGIN_USER_KEY + token;
         stringRedisTemplate.opsForHash().putAll(tokenKey, userMap);
+        log.info("存储 token 到 Redis: {}, 用户信息: {}", tokenKey, userMap);
         // 7/4 设置有效期(每次访问都更新有效期)
         stringRedisTemplate.expire(tokenKey, RedisConstants.LOGIN_USER_TTL, TimeUnit.SECONDS);
         // 8. 返回token
